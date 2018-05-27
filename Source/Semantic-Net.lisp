@@ -410,6 +410,7 @@
 (defmethod ENSURE-CONCEPT :around ((concept t)
 				   &rest rest
 				   &key (increment-weight t))
+  (declare (ignore rest))
   (let ((concept (call-next-method)))
     (when increment-weight
       (incf (concept-weight concept)))
@@ -548,7 +549,7 @@
 (defmethod ATOMIC-CONCEPT-P ((concept-name STRING)
 			     &key
 			     (graph *default-net*))
-  (let ((concept (find-concept concept-name graph)))
+  (let ((concept (find-concept concept-name :graph graph)))
     (when concept
       (atomic-concept-p concept :graph graph))))
 
@@ -564,7 +565,7 @@
 ;;;-----------------------------------------------------------------------------
 
 (defmethod CONCEPT-NORM ((concept-name STRING) &key (graph *default-NET*))
-  (let ((concept (find-concept concept-name graph)))
+  (let ((concept (find-concept concept-name :graph graph)))
     (when concept
       (concept-norm concept :graph graph))))
 
@@ -876,7 +877,7 @@
 (defmethod MAP-RELATIONS ((graph GRAPH)(map-fn FUNCTION)
 			  &key 
 			  (relation-types nil))
-  (map-graph-edges graph map-fn relation-types))
+  (map-graph-edges graph map-fn :edge-types relation-types))
   
 ;;;-----------------------------------------------------------------------------
 ;;; MAP-CONCEPT-RELATIONS
@@ -885,13 +886,13 @@
 (defmethod MAP-CONCEPT-RELATIONS ((concept CONCEPT-MIXIN)(map-fn FUNCTION)
 				  &key 
 				  (relation-types nil))
-  (map-graph-edges concept map-fn relation-types))
+  (map-graph-edges concept map-fn :edge-types  relation-types))
 
 ;;;-----------------------------------------------------------------------------
 
 (defmethod MAP-CONCEPT-RELATIONS ((concept-name t)(map-fn FUNCTION)
-			  &key 
-			  (relation-types nil))
+				  &key 
+				    (relation-types nil))
   (let ((concept (find-concept concept-name)))
     (when concept
       (map-concept-relations concept map-fn :relation-types relation-types))))

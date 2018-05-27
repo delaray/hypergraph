@@ -27,4 +27,5 @@
 	   (marriage (add-relation jill 'is-married-to jack :graph graph))
 	   (resents (add-relation john 'resents marriage :graph graph))
 	   (dislikes (add-relation mom 'dislikes resents :graph graph)))
+      (declare (ignore  likes1 likes2 loves dislikes))
       graph)))
