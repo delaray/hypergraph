@@ -50,7 +50,7 @@
 
 (define-module :Graph
   (:directory :graph-root)
-  (:requires :utilities)
+  (:requires  :utilities)
   (:files "Graph"
 	  "Graph-Operations"
 	  "Graph-Traversals"
@@ -62,7 +62,7 @@
 
 (define-module :Persistent-Graph
   (:directory :graph-root)
-  (:requires :graph)
+  (:requires :database :graph)
   (:files "Graph-Persistence-Postgres"))
 
 ;;;----------------------------------------------------------------------------

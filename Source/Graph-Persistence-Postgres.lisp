@@ -59,6 +59,11 @@
 ;;; PostModern
 ;;;----------------------------------------------------------------------------
 
+
+(eval-when (eval compile load)
+  (asdf:oos 'asdf:load-op :postmodern))
+
+#+IGNORE
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (asdf:oos 'asdf:load-op :postmodern))
 
