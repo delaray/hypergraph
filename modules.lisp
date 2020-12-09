@@ -80,6 +80,7 @@
 ;;; Graph-Graphics
 ;;;----------------------------------------------------------------------------
 
+#+IGNORE
 (define-module :Graph-Graphics
   (:directory :graph-root)
   (:requires :gom :graph)
