@@ -1263,7 +1263,7 @@
 			  (cache nil))
   (setf file-name (util::make-graphs-pathname file-name "lisp2" subdirectory))
   (cond ((probe-file file-name)
-	 (format t "~%Restoring graph from ~a..." file-name)
+	 (format t "~%Restoring graph from:~%~a..." file-name)
 	 (with-open-file (file file-name :direction :input)
 	   (let ((graph (or graph
 			    (find-graph (pathname-name file-name) :memory)
@@ -1348,7 +1348,7 @@
 			  (cache nil))
    (setf file-name (util::make-graphs-pathname file-name "lisp"))
   (cond ((probe-file file-name)
-	 (format t "~%Restoring graph from ~a..." file-name)
+	 (format t "~%Restoring graph from:~%~a..." file-name)
 	 (with-open-file (file file-name :direction :input)
 	   (let ((vertices (read file))
 		 (vertex-list nil)
@@ -1402,7 +1402,7 @@
 (defmethod RESTORE-GRAPH ((format (eql :fasl))(file-name STRING) &rest rest)
   (declare (ignore rest))
   (setf file-name (util::make-graphs-pathname file-name "fasl"))
-  (format t "~%Restoring graph from ~a..." file-name)
+  (format t "~%Restoring graph from:~%~a..." file-name)
   (load file-name)
   %%tempgraph%%)
 
