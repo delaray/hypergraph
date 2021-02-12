@@ -78,9 +78,9 @@
 (defmethod INITIALIZE-SQL-CONNECTION ((db-type (eql :postgres))
 				      &key 
 				      (host "localhost")
-				      (db-name "postgres")
+				      (db-name "wikidb")
 				      (user "postgres")
-				      (password "postgres"))
+				      (password "Terrapin1"))
   (unless *sql-db-connection*
     (pomo::connect-toplevel db-name user password host)
     (setf *sql-db-connection* t)))
@@ -220,9 +220,11 @@
 
 (defmethod GRAPH-BASE-NAME ((graph-name STRING))
   (cond ((search "-processed" graph-name :test #'string-equal)
-	 (setf graph-name (subseq graph-name 0 (- (length graph-name)(length "-processed")))))
+	 (setf graph-name
+	       (subseq graph-name 0 (- (length graph-name)(length "-processed")))))
 	((search "-raw" graph-name :test #'string-equal)
-	 (setf graph-name (subseq graph-name 0 (- (length graph-name)(length "-raw")))))
+	 (setf graph-name
+	       (subseq graph-name 0 (- (length graph-name)(length "-raw")))))
 	(t nil))
   graph-name)
 
@@ -236,8 +238,13 @@
 ;;;----------------------------------------------------------------------------
 
 (defmethod FIND-GRAPH ((graph-name STRING)(db-type (eql :postgres)))
-  (query (:select 'name :from (:as 'GRAPHS 'x) :where (:= 'x.name graph-name))))
+  (query (:select 'name :from (:as 'TOPIC_GRAPHS 'x) :where (:= 'x.name graph-name))))
 
+;;;----------------------------------------------------------------------------
+
+(defmethod GET-GRAPHS ((db-type (eql :postgres)))
+  (query (:select 'name 'vertices 'edges :from 'TOPIC_GRAPHS)))
+		       
 ;;;----------------------------------------------------------------------------
 ;;; DELETE-GRAPH
 ;;;----------------------------------------------------------------------------
